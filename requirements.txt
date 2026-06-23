@@ -1,0 +1,17 @@
+fastapi
+uvicorn[standard]
+
+langchain
+langchain-core
+langchain-community
+langchain-ollama
+
+pydantic
+
+python-multipart
+
+pypdf
+python-docx
+
+jinja2
+aiofiles

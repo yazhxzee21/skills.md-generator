@@ -1,0 +1,7 @@
+Network Setup Process
+
+1. Configure router
+2. Assign IP addresses
+3. Configure firewall
+4. Test connectivity
+5. Monitor network performance

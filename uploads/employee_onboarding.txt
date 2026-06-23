@@ -1,0 +1,10 @@
+Employee Onboarding Process
+
+1. Create employee account
+2. Configure email access
+3. Setup VPN credentials
+4. Install development tools
+5. Provide security training
+6. Verify access permissions
+
+The onboarding team is responsible for ensuring that all new employees receive the required accounts, software, training, and access rights before starting work.

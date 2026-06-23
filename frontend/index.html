@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Skills.md Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="sidebar">
+        <h2>LLM Agent</h2>
+
+        <div class="menu">
+            <div class="menu-item active">
+                Skills Generator
+            </div>
+        </div>
+    </div>
+
+    <div class="main">
+
+        <div class="header">
+            <h1>Skills.md Generator Dashboard</h1>
+        </div>
+
+        <div class="upload-card">
+
+            <h2>Upload Document</h2>
+
+            <input
+                type="file"
+                id="fileInput"
+            >
+
+            <button
+                onclick="generateSkills()">
+                Generate Skills
+            </button>
+
+        </div>
+
+        <div class="result-card">
+
+            <div class="result-header">
+
+                <h2>Generated Skills.md</h2>
+
+                <a
+                    id="downloadLink"
+                    style="display:none"
+                    target="_blank">
+
+                    Download File
+
+                </a>
+
+            </div>
+
+            <pre id="result">
+
+Upload a document to begin...
+
+            </pre>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

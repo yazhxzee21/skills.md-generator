@@ -1,0 +1,13 @@
+from docx import Document
+
+
+def read_docx(path):
+
+    doc = Document(path)
+
+    text = []
+
+    for para in doc.paragraphs:
+        text.append(para.text)
+
+    return "\n".join(text)
