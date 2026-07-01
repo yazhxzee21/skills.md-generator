@@ -1,105 +1,47 @@
+console.log("script loaded");
+
 async function generateSkills() {
 
-    const file =
-        document.getElementById("fileInput")
-        .files[0];
+    console.log("BUTTON CLICKED");
+
+    const file = document.getElementById("fileInput").files[0];
+
+    console.log("Selected file:", file);
 
     if (!file) {
-
         alert("Select a file first");
-
         return;
     }
 
-    const formData =
-        new FormData();
-
+    const formData = new FormData();
     formData.append("file", file);
 
     try {
 
-        document.getElementById("result")
-            .textContent =
-            "Uploading file...";
+        console.log("Starting upload...");
 
-        // STEP 1
+        const uploadResponse = await fetch(
+            "http://127.0.0.1:8000/upload",
+            {
+                method: "POST",
+                body: formData
+            }
+        );
 
-        const uploadResponse =
-            await fetch(
-                "http://127.0.0.1:8000/upload",
-                {
-                    method:"POST",
-                    body:formData
-                }
-            );
+        console.log("Upload response:", uploadResponse);
 
-        const uploadData =
-            await uploadResponse.json();
+        const uploadData = await uploadResponse.json();
 
-        // STEP 2
+        console.log("Upload data:", uploadData);
 
-        document.getElementById("result")
-            .textContent =
-            "Generating skills.md...";
+        document.getElementById("result").textContent =
+            JSON.stringify(uploadData, null, 2);
 
-        const generateResponse =
-            await fetch(
-                "http://127.0.0.1:8000/generate-skills",
-                {
-                    method:"POST",
-                    headers:{
-                        "Content-Type":
-                        "application/json"
-                    },
-                    body:JSON.stringify({
-                        filename:
-                        uploadData.filename
-                    })
-                }
-            );
+    } catch (error) {
 
-        const generateData =
-            await generateResponse.json();
+        console.error("FULL ERROR:", error);
 
-        // STEP 3
-
-        const fileName =
-            generateData.skills_file;
-
-        const downloadUrl =
-            "http://127.0.0.1:8000/download/"
-            + fileName;
-
-        const fileResponse =
-            await fetch(downloadUrl);
-
-        const skillsText =
-            await fileResponse.text();
-
-        document.getElementById("result")
-            .textContent =
-            skillsText;
-
-        const link =
-            document.getElementById(
-                "downloadLink"
-            );
-
-        link.href =
-            downloadUrl;
-
-        link.style.display =
-            "inline-block";
-
-    }
-
-    catch(error){
-
-        console.error(error);
-
-        document.getElementById(
-            "result"
-        ).textContent =
-        "Error generating skills.";
+        document.getElementById("result").textContent =
+            error.toString();
     }
 }
