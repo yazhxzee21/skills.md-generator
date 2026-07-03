@@ -10,6 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from agents.extraction_agent import extract_content
 from agents.skills_generator import generate_skills
+from agents.chat_agent import chat_with_document
 
 
 app = FastAPI()
@@ -29,6 +30,10 @@ os.makedirs("generated", exist_ok=True)
 
 class SkillsRequest(BaseModel):
     filename: str
+
+
+class ChatRequest(BaseModel):
+    message: str
 
 
 @app.get("/")
@@ -53,6 +58,7 @@ async def upload_file(file: UploadFile = File(...)):
         "message": "File uploaded successfully"
     }
 
+
 @app.post("/generate-skills")
 def generate(req: SkillsRequest):
 
@@ -70,6 +76,34 @@ def generate(req: SkillsRequest):
     return {
         "status": "success",
         "skills_file": output_file
+    }
+
+
+@app.post("/chat")
+def chat(req: ChatRequest):
+
+    generated_folder = "generated"
+
+    document = ""
+
+    files = os.listdir(generated_folder)
+
+    if files:
+        latest_file = max(
+            [os.path.join(generated_folder, f) for f in files],
+            key=os.path.getmtime
+        )
+
+        with open(latest_file, "r", encoding="utf-8") as f:
+            document = f.read()
+
+    answer = chat_with_document(
+        document,
+        req.message
+    )
+
+    return {
+        "reply": answer
     }
 
 
